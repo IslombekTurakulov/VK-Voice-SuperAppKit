@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_chat">
+
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="com.iuturakulov.vkvoicesuperappkit.model.VoiceListFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_voice_list" >
+        <action
+            android:id="@+id/action_firstFragment_to_secondFragment"
+            app:destination="@id/profile_person" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile_person"
+        android:name="com.iuturakulov.vkvoicesuperappkit.model.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

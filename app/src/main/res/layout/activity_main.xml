@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/almostDark"
+    tools:context=".model.MainActivity">
+
+    <me.ibrahimsn.lib.SmoothBottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        android:contentDescription="@string/app_name"
+        app:backgroundColor="#96ffffff"
+        app:cornerRadius="@dimen/_10sdp"
+        app:corners="all"
+        app:iconSize="@dimen/_20sdp"
+        app:iconTint="@color/black"
+        app:iconTintActive="@color/greenDark"
+        app:indicatorColor="#2DFFFFFF"
+        app:indicatorRadius="@dimen/_14sdp"
+        app:itemPadding="@dimen/_15sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_main"
+        app:sideMargins="@dimen/_10sdp"
+        app:textColor="@color/greenDark"
+        app:textSize="@dimen/_10sdp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
