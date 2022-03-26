@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@+id/navigation_voice_note"
         android:icon="@drawable/navigation"
         android:iconTint="@color/greenDark"
         android:title="Navigation" />
     <item
-        android:id="@+id/profile_person"
-        android:icon="@drawable/profile"
+        android:id="@+id/audioListFragment"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
         android:iconTint="@color/greenDark"
         android:title="Profile" />
 </menu>

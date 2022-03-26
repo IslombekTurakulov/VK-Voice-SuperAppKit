@@ -4,20 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/almostDark"
     tools:context=".model.MainActivity">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:defaultNavHost="true"
+        app:navGraph='@navigation/navigation_menu'
+        app:layout_constraintBottom_toTopOf="@+id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <me.ibrahimsn.lib.SmoothBottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
+        android:layout_height="@dimen/_40sdp"
         android:contentDescription="@string/app_name"
-        app:backgroundColor="#96ffffff"
+        app:backgroundColor="@color/almostDark"
         app:cornerRadius="@dimen/_10sdp"
-        app:corners="all"
+        app:corners="top_left|top_right"
         app:iconSize="@dimen/_20sdp"
-        app:iconTint="@color/black"
-        app:iconTintActive="@color/greenDark"
+        app:iconTint="@color/white"
+        app:iconTintActive="@color/white"
         app:indicatorColor="#2DFFFFFF"
         app:indicatorRadius="@dimen/_14sdp"
         app:itemPadding="@dimen/_15sdp"
@@ -26,6 +37,5 @@
         app:sideMargins="@dimen/_10sdp"
         app:textColor="@color/greenDark"
         app:textSize="@dimen/_10sdp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

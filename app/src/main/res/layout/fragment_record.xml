@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".model.RecordFragment">
+
+    <TextView
+        android:id="@+id/record_filename"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_32sdp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="@dimen/_32sdp"
+        android:fontFamily="@font/gilroy_black"
+        android:hint="Чтобы записать аудио, нажмите на кнопку"
+        android:lineHeight="@dimen/_32sdp"
+        android:lines="2"
+        android:textAlignment="center"
+        android:textColor="@color/colorDarkBlue"
+        android:textColorHint="#78909C"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Chronometer
+        android:id="@+id/record_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="184dp"
+        android:fontFamily="@font/gilroy_regular"
+        android:textColor="@color/colorDarkBlue"
+        android:textSize="@dimen/_45sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/record_filename" />
+
+    <ImageButton
+        android:id="@+id/record_btn"
+        android:layout_width="127dp"
+        android:layout_height="119dp"
+        android:background="@android:color/white"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/mic_off"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/record_timer"
+        app:layout_constraintVertical_bias="0.844" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

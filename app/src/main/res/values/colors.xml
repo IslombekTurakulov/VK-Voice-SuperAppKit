@@ -12,4 +12,8 @@
     <color name="green">#4CAF50</color>
     <color name="greenDark">#28852C</color>
     <color name="fullGreen">#30E421</color>
+    <color name="colorPrimary">#6177FC</color>
+    <color name="colorPrimaryDark">#576EF7</color>
+    <color name="colorAccent">#FF6584</color>
+    <color name="colorDarkBlue">#3D4054</color>
 </resources>
