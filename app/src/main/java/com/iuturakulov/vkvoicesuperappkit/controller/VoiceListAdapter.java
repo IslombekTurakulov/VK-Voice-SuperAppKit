@@ -18,11 +18,13 @@ public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.Audi
 
     private final File[] allFiles;
     private final onItemListClick onItemListClick;
-    private TimeParser timeAgo;
+    private final onLongItemListClick onLongItemListClick;
+    private TimeParser timeParser;
 
-    public VoiceListAdapter(File[] allFiles, onItemListClick onItemListClick) {
+    public VoiceListAdapter(File[] allFiles, onItemListClick onItemListClick, onLongItemListClick onLongItemListClick) {
         this.allFiles = allFiles;
         this.onItemListClick = onItemListClick;
+        this.onLongItemListClick = onLongItemListClick;
     }
 
     public static String convertToNormalTime(long milliseconds) {
@@ -47,14 +49,14 @@ public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.Audi
     @Override
     public AudioViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.element_voice_component, parent, false);
-        timeAgo = new TimeParser();
+        timeParser = new TimeParser();
         return new AudioViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AudioViewHolder holder, int position) {
         holder.list_title.setText(allFiles[position].getName());
-        holder.list_date.setText(timeAgo.getTimeAgo(allFiles[position].lastModified()));
+        holder.list_date.setText(timeParser.getTimeAgo(allFiles[position].lastModified()));
         System.out.println(allFiles[position].getAbsoluteFile().getAbsolutePath());
         holder.list_duration.setText(getDuration(allFiles[position].getAbsoluteFile()));
     }
@@ -82,7 +84,11 @@ public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.Audi
         void onClickListener(File file, int position);
     }
 
-    public class AudioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public interface onLongItemListClick {
+        void onClickListener(File file,TextView title, TextView lastModified, int position);
+    }
+
+    public class AudioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private final TextView list_title;
         private final TextView list_date;
@@ -99,6 +105,12 @@ public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.Audi
         @Override
         public void onClick(View v) {
             onItemListClick.onClickListener(allFiles[getAdapterPosition()], getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            onLongItemListClick.onClickListener(allFiles[getAdapterPosition()], list_title, list_date, getAdapterPosition());
+            return true;
         }
     }
 }

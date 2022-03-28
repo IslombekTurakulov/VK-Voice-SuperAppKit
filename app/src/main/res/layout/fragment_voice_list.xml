@@ -9,8 +9,7 @@
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/audio_list_view"
        android:layout_width="match_parent"
-       android:layout_marginTop="@dimen/_64sdp"
-       android:layout_height="@dimen/_420sdp"
+       android:layout_height="@dimen/_400sdp"
        app:layout_constraintBottom_toTopOf="@+id/player_sheet"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +35,7 @@
           android:ellipsize="end"
           android:fontFamily="@font/gilroy_regular"
           android:maxLines="1"
-          android:text="Name of audio"
+          android:text="@string/audio_name"
           android:textAlignment="center"
           android:textColor="@color/white"
           android:textSize="@dimen/_12sdp"

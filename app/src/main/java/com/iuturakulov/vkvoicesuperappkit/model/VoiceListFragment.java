@@ -1,28 +1,37 @@
 package com.iuturakulov.vkvoicesuperappkit.model;
 
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.iuturakulov.vkvoicesuperappkit.R;
+import com.iuturakulov.vkvoicesuperappkit.controller.TimeParser;
 import com.iuturakulov.vkvoicesuperappkit.controller.VoiceListAdapter;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Objects;
 
-public class VoiceListFragment extends Fragment implements VoiceListAdapter.onItemListClick {
+public class VoiceListFragment extends Fragment implements VoiceListAdapter.onItemListClick, VoiceListAdapter.onLongItemListClick {
     private MediaPlayer mediaPlayer = null;
     private boolean isPlaying = false;
     private File fileToPlay = null;
@@ -93,7 +102,7 @@ public class VoiceListFragment extends Fragment implements VoiceListAdapter.onIt
         String path = requireActivity().getExternalFilesDir("/").getAbsolutePath();
         File directory = new File(path);
         File[] allFiles = directory.listFiles();
-        VoiceListAdapter voiceListAdapter = new VoiceListAdapter(allFiles, this);
+        VoiceListAdapter voiceListAdapter = new VoiceListAdapter(allFiles, this, this);
         audioList.setHasFixedSize(true);
         audioList.setLayoutManager(new LinearLayoutManager(getContext()));
         audioList.setAdapter(voiceListAdapter);
@@ -180,5 +189,44 @@ public class VoiceListFragment extends Fragment implements VoiceListAdapter.onIt
         if (isPlaying) {
             stopAudio();
         }
+    }
+
+    @Override
+    public void onClickListener(File file, TextView title, TextView lastModified, int position) {
+        String strPattern = "^[a-zA-Z0-9._ -]+\\.(mp3|3gp|wav)$";
+        final EditText input = new EditText(requireContext());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireContext())
+                .setTitle("Введите название файла")
+                .setMessage("Введите название с расширением")
+                .setPositiveButton(
+                        "Yes", (dialog, whichButton) -> {
+                            String newFileName = input.getText().toString();
+                            if (newFileName.matches(strPattern)) {
+                                Toast.makeText(getContext(),
+                                        "Успешно!", Toast.LENGTH_SHORT).show();
+                                title.setText(newFileName);
+                                File newFile = new File(file.getParent(), newFileName);
+                                try {
+                                    Files.move(file.toPath(), newFile.toPath());
+                                    TimeParser timeParser = new TimeParser();
+                                    lastModified.setText(timeParser.getTimeAgo(newFile.lastModified()));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                Toast.makeText(getContext(),
+                                        "Неправильное имя файла!", Toast.LENGTH_SHORT).show();
+                            }
+                        }).setNegativeButton("Cancel", null).setView(input);
+        alertDialog.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Test");
+        builder.setCancelable(true);
+        builder.setNeutralButton("TEST", (dialog, which) -> Log.d("TAG", "You click the TEST button of the dialog."));
+        builder.show();
     }
 }

@@ -20,7 +20,7 @@
         android:textAlignment="center"
         android:textColor="@color/colorDarkBlue"
         android:textColorHint="#78909C"
-        android:textSize="@dimen/_16sdp"
+        android:textSize="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,20 +54,37 @@
         app:layout_constraintTop_toBottomOf="@id/record_timer"
         app:layout_constraintVertical_bias="0.423" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_marginTop="@dimen/_12sdp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/record_filename" >
+
+        <net.gotev.speech.ui.SpeechProgressView
+            android:id="@+id/progress"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginBottom="4dp" />
+    </LinearLayout>
+
     <EditText
         android:id="@+id/editTextTextPersonName"
         android:layout_width="384dp"
         android:layout_height="102dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
-        android:editable="false"
-        android:inputType="textMultiLine"
-        android:text="My speech recognizer"
-        android:textAlignment="center"
+        android:hint="Распознавание речи"
+        android:importantForAutofill="no"
+        android:inputType="textImeMultiLine"
+        android:lines="5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/record_filename"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

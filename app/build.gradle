@@ -55,4 +55,6 @@ dependencies {
 
     // Smooth Bottom Bar
     implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
+    // Speech recognition
+    implementation 'net.gotev:speech:1.6.2'
 }

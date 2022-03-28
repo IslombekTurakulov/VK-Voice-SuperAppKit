@@ -1,24 +1,17 @@
 package com.iuturakulov.vkvoicesuperappkit.model;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Menu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.iuturakulov.vkvoicesuperappkit.R;
-import com.iuturakulov.vkvoicesuperappkit.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +19,6 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    private NavController navController;
-    private ActivityMainBinding binding;
     private RecordFragment recordFragment;
     private VoiceListFragment voiceListFragment;
 
@@ -53,11 +44,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAdapter);
         Objects.requireNonNull(tabLayout.getTabAt(0)).setIcon(R.drawable.navigation);
         Objects.requireNonNull(tabLayout.getTabAt(1)).setIcon(R.drawable.ic_list);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        return navController.navigateUp() || super.onSupportNavigateUp();
     }
 
     private static class ViewPagerAdapter extends FragmentPagerAdapter {
