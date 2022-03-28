@@ -1,5 +1,7 @@
 package com.iuturakulov.vkvoicesuperappkit.model;
 
+import static com.iuturakulov.vkvoicesuperappkit.model.MainActivity.initializeSpeechRecognition;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
@@ -42,27 +44,21 @@ import java.util.Objects;
 
 
 public class RecordFragment extends Fragment implements View.OnClickListener {
-
-    private static final int REQUEST_RECORD_AUDIO_PERMISSION_CODE = 1;
     private TextView fileNameTV;
     private ImageView btn_record;
-    private EditText editText;
     private boolean isRecording = false;
     private MediaRecorder mediaRecorder;
     private String recordFile;
-    private LinearLayout linearLayout;
+    private EditText text;
     private Chronometer recordTimer;
     private SpeechProgressView progressView;
-
 
     public RecordFragment() {
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Speech.init(requireContext());
         return inflater.inflate(R.layout.fragment_record, container, false);
     }
 
@@ -72,11 +68,9 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         btn_record = view.findViewById(R.id.record_btn);
         recordTimer = view.findViewById(R.id.record_timer);
         fileNameTV = view.findViewById(R.id.record_filename);
-        editText = view.findViewById(R.id.editTextTextPersonName);
-        linearLayout = view.findViewById(R.id.linearLayout);
+        text = view.findViewById(R.id.editTextTextPersonName);
         progressView = view.findViewById(R.id.progress);
-        // editText.setInputType(InputType.TYPE_NULL);
-        editText.setEnabled(false);
+        // text.setInputType(InputType.TYPE_NULL);
         btn_record.setOnClickListener(this);
     }
 
@@ -93,6 +87,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             } else {
                 if (checkPermissions()) {
                     startRecording();
+                    initializeSpeechRecognition();
                     btn_record.setImageDrawable(getResources().getDrawable(R.drawable.mic_on, null));
                     isRecording = true;
                 }
@@ -102,7 +97,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
 
     private void startRecording() {
         try {
-            Speech.getInstance().startListening(progressView, new SpeechDelegate() {
+            Speech.getInstance().startListening(new SpeechDelegate() {
                 @Override
                 public void onStartOfSpeech() {
                     Log.i("speech", "speech recognition is now active");
@@ -146,62 +141,6 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         mediaRecorder.start();
     }
 
-    /*private void onRecordAudioPermissionGranted() {
-        linearLayout.setVisibility(View.VISIBLE);
-
-        try {
-            Speech.getInstance().stopTextToSpeech();
-            Speech.getInstance().startListening(speechProgressView, RecordFragment.this);
-
-        } catch (SpeechRecognitionNotAvailable exc) {
-            showSpeechNotSupportedDialog();
-
-        } catch (GoogleVoiceTypingDisabledException exc) {
-        }
-    }*/
-
-    /*private void onSetSpeechToTextLanguage() {
-        Speech.getInstance().getSupportedSpeechToTextLanguages(new SupportedLanguagesListener() {
-            @Override
-            public void onSupportedLanguages(List<String> supportedLanguages) {
-                CharSequence[] items = new CharSequence[supportedLanguages.size()];
-                supportedLanguages.toArray(items);
-
-                new AlertDialog.Builder(requireContext())
-                        .setTitle("Current language: " + Speech.getInstance().getSpeechToTextLanguage())
-                        .setItems(items, (dialogInterface, i) -> {
-                            Locale locale;
-
-                            locale = Locale.forLanguageTag(supportedLanguages.get(i));
-
-                            Speech.getInstance().setLocale(locale);
-                            Toast.makeText(requireContext(), "Selected: " + items[i], Toast.LENGTH_LONG).show();
-                        })
-                        .setPositiveButton("Cancel", null)
-                        .create()
-                        .show();
-                // onRecordAudioPermissionGranted();
-            }
-
-            @Override
-            public void onNotSupported(UnsupportedReason reason) {
-                switch (reason) {
-                    case GOOGLE_APP_NOT_FOUND:
-                        showSpeechNotSupportedDialog();
-                        break;
-
-                    case EMPTY_SUPPORTED_LANGUAGES:
-                        new AlertDialog.Builder(requireContext())
-                                .setTitle("Set supported languages")
-                                .setMessage("Languages not available")
-                                .setPositiveButton("OK", null)
-                                .show();
-                        break;
-                }
-            }
-        });
-    }*/
-
     private void initializeRecorder(String recordPath) {
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -229,12 +168,6 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             return false;
         }
     }
-
-   /* @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Speech.getInstance().shutdown();
-    }*/
 
     @Override
     public void onStop() {
@@ -266,50 +199,4 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
             stopRecording();
         }
     }
-
-   /* @Override
-    public void onStartOfSpeech() {
-
-    }
-
-    @Override
-    public void onSpeechRmsChanged(float value) {
-
-    }
-
-    @Override
-    public void onSpeechResult(String result) {
-        editText.setText(result);
-        if (result.isEmpty()) {
-            Speech.getInstance().say("Repeat again please");
-        } else {
-            Speech.getInstance().say(result);
-        }
-    }
-
-    @Override
-    public void onSpeechPartialResults(List<String> results) {
-        editText.setText("");
-        for (String partial : results) {
-            editText.append(partial + " ");
-        }
-    }
-
-    private void showSpeechNotSupportedDialog() {
-        DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-            switch (which) {
-                case DialogInterface.BUTTON_POSITIVE:
-                    SpeechUtil.redirectUserToGoogleAppOnPlayStore(requireContext());
-                    break;
-                case DialogInterface.BUTTON_NEGATIVE:
-                    break;
-            }
-        };
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setMessage("Speech not available")
-                .setCancelable(false)
-                .setPositiveButton("YES", dialogClickListener)
-                .setNegativeButton("NO", dialogClickListener)
-                .show();
-    }*/
 }

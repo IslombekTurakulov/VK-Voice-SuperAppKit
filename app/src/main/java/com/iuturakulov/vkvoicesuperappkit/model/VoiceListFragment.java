@@ -1,6 +1,7 @@
 package com.iuturakulov.vkvoicesuperappkit.model;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,7 +36,6 @@ public class VoiceListFragment extends Fragment implements VoiceListAdapter.onIt
     private MediaPlayer mediaPlayer = null;
     private boolean isPlaying = false;
     private File fileToPlay = null;
-
     private ImageButton btnStart;
     private TextView fileNameOfPlayer;
     private SeekBar seekBarOfPlayer;
@@ -131,14 +131,14 @@ public class VoiceListFragment extends Fragment implements VoiceListAdapter.onIt
             initializeListOfAudioItems(audioList);
         }
         mediaPlayer.pause();
-        btnStart.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_play_arrow_24, null));
+        btnStart.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_baseline_play_arrow_24, null));
         isPlaying = false;
         seekbarHandler.removeCallbacks(updateSeekbar);
     }
 
     private void resumeAudio() {
         mediaPlayer.start();
-        btnStart.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_pause_24, null));
+        btnStart.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_baseline_pause_24, null));
         isPlaying = true;
 
         updateRunnable();
@@ -146,7 +146,7 @@ public class VoiceListFragment extends Fragment implements VoiceListAdapter.onIt
     }
 
     private void stopAudio() {
-        btnStart.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_play_arrow_24, null));
+        btnStart.setImageDrawable(requireActivity().getResources().getDrawable(R.drawable.ic_baseline_play_arrow_24, null));
         isPlaying = false;
         mediaPlayer.stop();
         seekbarHandler.removeCallbacks(updateSeekbar);
@@ -195,6 +195,8 @@ public class VoiceListFragment extends Fragment implements VoiceListAdapter.onIt
     public void onClickListener(File file, TextView title, TextView lastModified, int position) {
         String strPattern = "^[a-zA-Z0-9._ -]+\\.(mp3|3gp|wav)$";
         final EditText input = new EditText(requireContext());
+        input.setTextColor(Color.BLACK);
+        input.setText(file.getName());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -208,12 +210,10 @@ public class VoiceListFragment extends Fragment implements VoiceListAdapter.onIt
                             if (newFileName.matches(strPattern)) {
                                 Toast.makeText(getContext(),
                                         "Успешно!", Toast.LENGTH_SHORT).show();
-                                title.setText(newFileName);
-                                File newFile = new File(file.getParent(), newFileName);
+                                File newFile = new File(file.getAbsolutePath(), newFileName);
                                 try {
                                     Files.move(file.toPath(), newFile.toPath());
-                                    TimeParser timeParser = new TimeParser();
-                                    lastModified.setText(timeParser.getTimeAgo(newFile.lastModified()));
+                                    initializeListOfAudioItems(audioList);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -223,10 +223,5 @@ public class VoiceListFragment extends Fragment implements VoiceListAdapter.onIt
                             }
                         }).setNegativeButton("Cancel", null).setView(input);
         alertDialog.show();
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Test");
-        builder.setCancelable(true);
-        builder.setNeutralButton("TEST", (dialog, which) -> Log.d("TAG", "You click the TEST button of the dialog."));
-        builder.show();
     }
 }

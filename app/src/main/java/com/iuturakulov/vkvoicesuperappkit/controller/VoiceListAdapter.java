@@ -13,6 +13,9 @@ import com.iuturakulov.vkvoicesuperappkit.R;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.AudioViewHolder> {
 
@@ -22,6 +25,13 @@ public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.Audi
     private TimeParser timeParser;
 
     public VoiceListAdapter(File[] allFiles, onItemListClick onItemListClick, onLongItemListClick onLongItemListClick) {
+      /*  ArrayList<File> list = new ArrayList<>(Arrays.asList(allFiles));
+        List<File> file = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (!getDuration(list.get(i).getAbsoluteFile()).equals("0:00")) {
+                file.add(list.get(i));
+            }
+        }*/
         this.allFiles = allFiles;
         this.onItemListClick = onItemListClick;
         this.onLongItemListClick = onLongItemListClick;
@@ -57,7 +67,6 @@ public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.Audi
     public void onBindViewHolder(@NonNull AudioViewHolder holder, int position) {
         holder.list_title.setText(allFiles[position].getName());
         holder.list_date.setText(timeParser.getTimeAgo(allFiles[position].lastModified()));
-        System.out.println(allFiles[position].getAbsoluteFile().getAbsolutePath());
         holder.list_duration.setText(getDuration(allFiles[position].getAbsoluteFile()));
     }
 
@@ -66,8 +75,9 @@ public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.Audi
         try {
             mp.setDataSource(file.getAbsolutePath());
             mp.prepare();
-        } catch (
-                IOException e) {
+            mp.start();
+            mp.stop();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         int duration = mp.getDuration();
@@ -100,6 +110,7 @@ public class VoiceListAdapter extends RecyclerView.Adapter<VoiceListAdapter.Audi
             list_title = itemView.findViewById(R.id.recording_title);
             list_date = itemView.findViewById(R.id.recording_date);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
