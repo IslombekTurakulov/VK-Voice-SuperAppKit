@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,8 +9,85 @@
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/audio_list_view"
        android:layout_width="match_parent"
-       android:layout_height="match_parent" />
+       android:layout_marginTop="@dimen/_64sdp"
+       android:layout_height="@dimen/_420sdp"
+       app:layout_constraintBottom_toTopOf="@+id/player_sheet"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="1.0" />
 
-   <include layout="@layout/media_player_component" />
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:id="@+id/player_sheet"
+       android:layout_width="match_parent"
+       android:layout_height="@dimen/_70sdp"
+       android:layout_alignParentBottom="true"
+       android:layout_marginBottom="-3dp"
+       android:background="@color/almostDark"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.0"
+       app:layout_constraintStart_toStartOf="parent">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+      <TextView
+          android:id="@+id/player_filename"
+          android:layout_width="@dimen/_300sdp"
+          android:layout_height="wrap_content"
+          android:layout_toStartOf="@+id/list_recording_current"
+          android:ellipsize="end"
+          android:fontFamily="@font/gilroy_regular"
+          android:maxLines="1"
+          android:text="Name of audio"
+          android:textAlignment="center"
+          android:textColor="@color/white"
+          android:textSize="@dimen/_12sdp"
+          app:layout_constraintBottom_toBottomOf="@+id/player_play_btn"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.515"
+          app:layout_constraintStart_toEndOf="@+id/player_play_btn"
+          app:layout_constraintTop_toTopOf="@+id/player_play_btn"
+          app:layout_constraintVertical_bias="0.352" />
+
+      <TextView
+          android:id="@+id/list_recording_current"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignTop="@+id/player_filename"
+          android:layout_alignBottom="@+id/player_filename"
+          android:layout_alignParentEnd="true"
+          android:ellipsize="end"
+          android:gravity="center_vertical"
+          android:maxLines="1"
+          android:textColor="@color/white"
+          android:textSize="@dimen/_10sdp"
+          app:layout_constraintBottom_toBottomOf="@+id/player_filename"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/player_filename"
+          tools:text="00:05" />
+
+      <ImageButton
+          android:id="@+id/player_play_btn"
+          android:layout_width="@dimen/_35sdp"
+          android:layout_height="@dimen/_35sdp"
+          android:background="@color/almostDark"
+          android:contentDescription="@string/app_name"
+          android:padding="@dimen/_16sdp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+
+      <SeekBar
+          android:id="@+id/player_seekbar"
+          android:layout_width="@dimen/_250sdp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/_10sdp"
+          android:progressBackgroundTint="@color/white"
+          android:progressBackgroundTintMode="screen"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/player_filename" />
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

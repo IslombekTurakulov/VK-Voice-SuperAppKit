@@ -5,38 +5,90 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.iuturakulov.vkvoicesuperappkit.R;
 import com.iuturakulov.vkvoicesuperappkit.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
     private ActivityMainBinding binding;
+    private RecordFragment recordFragment;
+    private VoiceListFragment voiceListFragment;
+
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        navController = Navigation.findNavController(this, R.id.main_fragment);
-        setupSmoothBottomMenu();
+        setContentView(R.layout.activity_main);
+        recordFragment = new RecordFragment();
+        voiceListFragment = new VoiceListFragment();
+        viewPager = findViewById(R.id.viewPagerMain);
+        tabLayout = findViewById(R.id.main_tabs_holder);
+        setupTopBar();
     }
 
-    private void setupSmoothBottomMenu() {
-        PopupMenu popupMenu = new PopupMenu(this, null);
-        popupMenu.inflate(R.menu.menu_main);
-        Menu menu = popupMenu.getMenu();
-        RecordFragment.isRecording = false;
-        binding.bottomBar.setupWithNavController(menu, navController);
+    private void setupTopBar() {
+        tabLayout.setupWithViewPager(viewPager);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
+        viewPagerAdapter.addFragment(recordFragment, "Records");
+        viewPagerAdapter.addFragment(voiceListFragment, "List");
+        viewPager.setAdapter(viewPagerAdapter);
+        Objects.requireNonNull(tabLayout.getTabAt(0)).setIcon(R.drawable.navigation);
+        Objects.requireNonNull(tabLayout.getTabAt(1)).setIcon(R.drawable.ic_list);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         return navController.navigateUp() || super.onSupportNavigateUp();
+    }
+
+    private static class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private final List<Fragment> fragments = new ArrayList<>();
+        private final List<String> fragmentTitle = new ArrayList<>();
+
+        public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            fragments.add(fragment);
+            fragmentTitle.add(title);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragmentTitle.get(position);
+        }
     }
 }

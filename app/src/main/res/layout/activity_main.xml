@@ -6,36 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".model.MainActivity">
 
-    <fragment
-        android:id="@+id/main_fragment"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/main_tabs_holder"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:defaultNavHost="true"
-        app:navGraph='@navigation/navigation_menu'
-        app:layout_constraintBottom_toTopOf="@+id/bottomBar"
+        android:layout_height="@dimen/_48sdp"
+        android:background="@color/almostDark"
+        app:elevation="6dp"
+        app:tabTextColor="@color/white"
+        app:tabTextAppearance="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIconTint="@color/white"
+        app:tabIndicatorColor="@android:color/holo_green_dark"
+        app:tabIndicatorHeight="@dimen/_5sdp"
+        app:tabMinWidth="@dimen/_150sdp"
+        app:tabSelectedTextColor="@android:color/white">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/navigation_voice_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/navigation" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/audioListFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_list" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/main_tabs_holder" />
 
-    <me.ibrahimsn.lib.SmoothBottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:contentDescription="@string/app_name"
-        app:backgroundColor="@color/almostDark"
-        app:cornerRadius="@dimen/_10sdp"
-        app:corners="top_left|top_right"
-        app:iconSize="@dimen/_20sdp"
-        app:iconTint="@color/white"
-        app:iconTintActive="@color/white"
-        app:indicatorColor="#2DFFFFFF"
-        app:indicatorRadius="@dimen/_14sdp"
-        app:itemPadding="@dimen/_15sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu_main"
-        app:sideMargins="@dimen/_10sdp"
-        app:textColor="@color/greenDark"
-        app:textSize="@dimen/_10sdp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_32sdp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="@dimen/_64sdp"
         android:layout_marginEnd="@dimen/_32sdp"
         android:fontFamily="@font/gilroy_black"
         android:hint="Чтобы записать аудио, нажмите на кнопку"
@@ -30,19 +30,21 @@
         android:id="@+id/record_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="@dimen/_20sdp"
         android:fontFamily="@font/gilroy_regular"
         android:textColor="@color/colorDarkBlue"
         android:textSize="@dimen/_45sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/record_filename" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
     <ImageButton
         android:id="@+id/record_btn"
         android:layout_width="127dp"
         android:layout_height="119dp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:background="@android:color/white"
         android:contentDescription="@string/app_name"
         android:src="@drawable/mic_off"
@@ -50,6 +52,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/record_timer"
-        app:layout_constraintVertical_bias="0.844" />
+        app:layout_constraintVertical_bias="0.423" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="384dp"
+        android:layout_height="102dp"
+        android:layout_marginTop="104dp"
+        android:ems="10"
+        android:editable="false"
+        android:inputType="textMultiLine"
+        android:text="My speech recognizer"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/record_filename"
+        android:importantForAutofill="no" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
